@@ -1,27 +1,53 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
+class data:
+    pos = 'position'
+    lig = 'light'
+    POSI = 'POSI'
+    LIGH = 'LIGH'
 
-ruta_Archivo = "E:/mierdas estudios/mierdas uni/TFG/Primeras 4 trayectorias/01-Training/T01_01/T01_01.txt"
+def getArrPos(arg, pos):
+    aux=[]
+    
+    for a in arg:
+        aux.append(a[pos])
+    return aux
+    
+def format(arg,type):
+    for a in arg:
+        index=arg.index(a)
+        arg[index]=float(a)
 
-def cambiar_texto_en_posicion(ruta_archivo):
-    archivo = open(ruta_archivo, "r")
-    datos   = archivo.readlines()
+    if type == data.pos:
+        arg.pop()
+        arg.pop()
+        arg.remove(arg[1])
+        return arg
+    if type == data.lig:
+        arg.remove(arg[3])
+        arg.remove(arg[1])
+        return arg
+
+def main():
+    ruta_Archivo = sys.argv[1]
     positions = []
     lights = []
     
+    archivo = open(ruta_Archivo, "r")
+    datos   = archivo.readlines()
+    
     for element in datos:
-        if  element.startswith('LIGH'):
-            formatted = format(element[5:-1].split(';'),"light")
+        if  element.startswith(data.LIGH):
+            formatted = format(element[5:-1].split(';'),data.lig)
             lights.append(formatted)  
-        if element.startswith('POSI'):
+        if element.startswith(data.POSI):
             print(element)
-            formatted = format(element[5:-1].split(';'),"position")
+            formatted = format(element[5:-1].split(';'),data.pos)
             positions.append(formatted)  
-    
-    #print('datos: ', lights)
-    
+        
     fig, ax = plt.subplots()
     ax.plot(getArrPos(lights,0),getArrPos(lights,1))
     #Agregamos las etiquetas y añadimos una leyenda.
@@ -45,27 +71,5 @@ def cambiar_texto_en_posicion(ruta_archivo):
     plt.legend()
     plt.savefig('grafica_lineal.png')
     plt.show()
-
-
-def getArrPos(arg, pos):
-    aux=[]
-    for a in arg:
-        aux.append(a[pos])
-    return aux
-    
-def format(arg,type):
-    for a in arg:
-        index=arg.index(a)
-        arg[index]=float(a)
-
-    if type == 'position':
-        arg.pop()
-        arg.pop()
-        arg.remove(arg[1])
-        return arg
-    if type == 'light':
-        arg.remove(arg[3])
-        arg.remove(arg[1])
-        return arg
             
-cambiar_texto_en_posicion(ruta_Archivo)
+main()

@@ -2,6 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import os
 
 class data:
     pos = 'position'
@@ -58,8 +59,8 @@ def main():
     plt.savefig('grafica_lineal.png')
     plt.show()
 
-    x = np.array(getArrPos(positions,1))
-    y = np.array(getArrPos(positions,2))
+    x = np.array(getArrPos(positions,2))
+    y = np.array(getArrPos(positions,1))
     # Gráfico
     fig, ax = plt.subplots()
     
@@ -68,6 +69,16 @@ def main():
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.title("Localizations")
+    plt.legend()
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+    fig, ax = plt.subplots()
+    ax.plot(getArrPos(positions,0),getArrPos(positions,1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Positions')
+    plt.title("Laitutde in time")
     plt.legend()
     plt.savefig('grafica_lineal.png')
     plt.show()

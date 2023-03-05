@@ -1,7 +1,10 @@
 import matplotlib
 import matplotlib.pyplot as plt
-from servicios.mapeo.mapeos import getArrayIndex
 import numpy as np
+
+from servicios.mapeo.mapeos import getArrayIndex
+from servicios.mapeo.mapeos import lightFormat
+
 
 def graphLightByTime(lights):
     fig, ax = plt.subplots()
@@ -48,5 +51,19 @@ def graphLongitudeByTime(positions):
     plt.ylabel('Positions')
     plt.title("Longitude in time")
 #    plt.legend()
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+
+def graphPositionAndLightByTime(positions, lights):
+    lights = lightFormat(lights)
+    fig, ax = plt.subplots()
+    ax.plot(getArrayIndex(lights,0),getArrayIndex(lights,1), marker='+', color='yellow')
+    ax.plot(getArrayIndex(positions,0),getArrayIndex(positions,1), marker='*', color='green')
+    ax.plot(getArrayIndex(positions,0),getArrayIndex(positions,2), marker='^', color='grey')
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Lux and Lat/Long')
+    plt.title("Variation by time")
+    plt.legend(["Light", "Latitude", "Longitude"], loc="upper left")
     plt.savefig('grafica_lineal.png')
     plt.show()

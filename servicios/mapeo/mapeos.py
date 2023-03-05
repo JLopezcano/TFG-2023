@@ -1,4 +1,5 @@
 from clases.classes import data
+import numpy as np
 
 def getArrayIndex(arg, index):
     aux=[]
@@ -21,3 +22,9 @@ def format(arg,type):
         arg.remove(arg[3])
         arg.remove(arg[1])
         return arg
+
+def lightFormat(lights):
+    auxLight=[]
+    for light in lights:
+        auxLight.append(np.array(light) / np.array([1, 1000]))
+    return auxLight

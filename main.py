@@ -19,5 +19,9 @@ def main():
     graphLocalization(positions)
     graphLatitudeByTime(positions)
     graphLongitudeByTime(positions)
+    
+    graphPositionAndLightByTime(positions, lights)
+
+    
 
 main()

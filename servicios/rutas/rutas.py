@@ -8,7 +8,7 @@ def readFiles(files, extension, filePath):
     for file in files:
         fullPath = ""
         fullPath = filePath / file
-        if file.endswith(extension):   #falla el index, indicar que es el indice donde estoy, no el str que representa
+        if file.endswith(extension):
             file = open(fullPath, "r")
             lines = file.readlines()
             
@@ -21,3 +21,30 @@ def readFiles(files, extension, filePath):
                     positions.append(formatted) 
                     
     return (lights, positions) 
+
+def readFilesToLists(files, extension, filePath):
+    lights = []
+    positions = []
+        
+    for file in files:
+        fullPath = ""
+        fullPath = filePath / file
+        if file.endswith(extension):
+            file = open(fullPath, "r")
+            lines = file.readlines()
+            fileLight = []
+            filePosition = []
+
+            for line in lines:
+                if  line.startswith(data.LIGH):
+                    formatted = format(line[5:-1].split(';'),data.light)
+                    fileLight.append(formatted) 
+                    
+                if line.startswith(data.POSI):
+                    formatted = format(line[5:-1].split(';'),data.position)
+                    filePosition.append(formatted)
+            
+            lights.append(fileLight)
+            positions.append(filePosition)
+    
+    return lights, positions

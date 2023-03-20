@@ -1,5 +1,42 @@
+from enum import Enum
+
 class data:
     position = 'position'
     light = 'light'
     POSI = 'POSI'
     LIGH = 'LIGH'
+
+
+
+class colours(Enum):
+    black = 'black'
+    grey = 'grey'
+    lightgrey = 'lightgrey'
+    rosybrown = 'rosybrown'
+    lightcoral = 'lightcoral'
+    brown = 'brown'
+    red = 'red'
+    tomato = 'tomato'
+    sienna = 'sienna'
+    lightsalmon = 'lightsalmon'
+    chocolate = 'chocolate'
+    sandybrown = 'sandybrown'
+    peru = 'peru'
+    darkorange = 'darkorange'
+    tan = 'tan'
+    gold = 'gold'
+    khaki = 'khaki'
+    darkkhaki = 'darkkhaki'
+    olive = 'olive'
+    yellow = 'yellow'
+    yellowgreen = 'yellowgreen'
+    olivedrab = 'olivedrab'
+    greenyellow = 'greenyellow'
+    weath = 'weath'
+    green = 'green'
+    lime = 'lime'
+    mediumaquamarine = 'mediumaquamarine'
+    aquamarine = 'aquamarine'
+    turquoise = 'turquoise'
+    darkslategray = 'darkslategray'
+    teal = 'teal'

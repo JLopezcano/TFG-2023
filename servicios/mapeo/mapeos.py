@@ -1,5 +1,7 @@
 from clases.classes import data
+
 import numpy as np
+from sklearn import preprocessing
 
 def getArrayIndex(arg, index):
     aux=[]
@@ -28,3 +30,107 @@ def lightFormat(lights):
     for light in lights:
         auxLight.append(np.array(light) / np.array([1, 1000]))
     return auxLight
+
+def lightByPosition(lights, positions):
+    aux = []
+    auxList = []
+    
+    for position in positions:
+        aux = []
+        indice = positions.index(position)
+        for light in lights[indice]:
+            for posi in position:
+                auxTime1 = posi[0] - 0.5 #2.0
+                auxTime2 = posi[0] + 0.5 #2.0
+                if (light[0] <= auxTime2) and (light[0] >= auxTime1):
+                    aux.append(light)
+        auxList.append(aux)
+            
+    return auxList
+
+def maximunLight(arrays):
+    max = 0.0
+    for array in arrays:
+        for num in array:
+            if num[1] > max:
+                max = num[1]
+    
+    return max
+
+def maximunPosition(arrays):
+    max = 0.0
+    max2 = -9.99*10**(99)
+    
+    for array in arrays:
+        for num in array:
+            if num[1] > max:
+                max = num[1]
+            if num[2] > max2:
+                max2 = num[2]
+    return [max, max2]
+
+def minimunLight(arrays):
+    min = 9.99*10**(99)
+    
+    for array in arrays:
+        for num in array:
+            if num[1] < min:
+                min = num[1]
+    
+    return min
+
+def minimunPosition(arrays):
+    min = 9.99*10**(99)
+    min2 = 9.99*10**(99)
+    
+    for array in arrays:
+        for num in array:
+            if num[1] < min:
+                min = num[1]
+            if num[2] < min2:
+                min2 = num[2]
+                
+    return [min, min2]
+
+def maximunLightSimpleTxt(array):
+    max = 0.0
+    for num in array:
+        if num[1] > max:
+            max = num[1]
+    
+    return max
+
+def minimunLightSimpleTxt(array):
+    min = 9.99*10**(99)
+    
+    for num in array:
+        if num[1] < min:
+            min = num[1]
+    
+    return min
+
+def normalizeLight(array, max, min):
+    newArray = []
+    
+    e2 = [1.0, min]
+    for element in array:
+        a = element[1] - min
+        b = max - min
+        auxNum = [element[0] / e2[0], a / b]
+        newArray.append(auxNum)
+    
+    return newArray
+
+def normalizePosition(array, max, max2, min, min2):
+    newArray = []
+    
+    e2 = [1.0, min, min2]
+    for element in array:
+        a = element[1] - min
+        b = max - min
+        c = element[2] - min2
+        d = max2 - min2
+        auxNum = [element[0] / e2[0], a / b, c / d]
+        newArray.append(auxNum)
+    
+    return newArray

@@ -1,10 +1,12 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.lines as mlines
+from sklearn import preprocessing
 
 from servicios.mapeo.mapeos import getArrayIndex
 from servicios.mapeo.mapeos import lightFormat
-
+from clases.classes import colours
 
 def graphLightByTime(lights):
     fig, ax = plt.subplots()
@@ -14,6 +16,21 @@ def graphLightByTime(lights):
     plt.ylabel('Lux')
     plt.title("Light Intensity")
 #    plt.legend()
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+
+def graphLightByTimeToList(lights):
+    arrayLegend = []
+    
+    fig, ax = plt.subplots()
+    for light in lights:
+        ax.plot(getArrayIndex(light,0),getArrayIndex(light,1))
+        arrayLegend.append("text"+ str(lights.index(light)+1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Lux')
+    plt.title("Light Intensity")
+    plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
     plt.show()
 
@@ -31,15 +48,49 @@ def graphLocalization(positions):
 #    plt.legend()
     plt.savefig('grafica_lineal.png')
     plt.show()
+
+def graphLocalizationInOrder(positions):
+    arrayLegend = []
     
+   # for posi in position:
+    x = np.array(getArrayIndex(positions,2))
+    y = np.array(getArrayIndex(positions,1))
+    #arrayLegend.append("text"+ str(position.index(position)+1))
+    # Gráfico
+    fig, ax = plt.subplots()
+    
+    plt.plot(x, y, "-ok", label = "Puntos")
+    plt.legend(loc = "upper right")
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title("Localizations")
+    plt.legend(arrayLegend, loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+
 def graphLatitudeByTime(positions):
     fig, ax = plt.subplots()
     ax.plot(getArrayIndex(positions,0),getArrayIndex(positions,1))
     #Agregamos las etiquetas y añadimos una leyenda.
     plt.xlabel('Time')
     plt.ylabel('Positions')
-    plt.title("Laitutde in time")
+    plt.title("Latitude in time")
 #    plt.legend()
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+def graphLatitudeByTimeToList(positions):
+    arrayLegend = []
+    
+    fig, ax = plt.subplots()
+    for position in positions:
+        ax.plot(getArrayIndex(position,0),getArrayIndex(position,1))
+        arrayLegend.append("text"+ str(positions.index(position)+1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Positions')
+    plt.title("Latitude in time")
+    plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
     plt.show()
 
@@ -53,11 +104,26 @@ def graphLongitudeByTime(positions):
 #    plt.legend()
     plt.savefig('grafica_lineal.png')
     plt.show()
+    
+def graphLongitudeByTimeToList(positions):
+    arrayLegend = []
+    
+    fig, ax = plt.subplots()
+    for position in positions:
+        ax.plot(getArrayIndex(position,0),getArrayIndex(position,2))
+        arrayLegend.append("text"+ str(positions.index(position)+1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Positions')
+    plt.title("Longitude in time")
+    plt.legend(arrayLegend, loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
 
 def graphPositionAndLightByTime(positions, lights):
-    lights = lightFormat(lights)
+    #lights = lightFormat(lights)
     fig, ax = plt.subplots()
-    ax.plot(getArrayIndex(lights,0),getArrayIndex(lights,1), marker='+', color='yellow')
+    ax.plot(getArrayIndex(lights,0),getArrayIndex(lights,1), marker='+', color='black')
     ax.plot(getArrayIndex(positions,0),getArrayIndex(positions,1), marker='*', color='green')
     ax.plot(getArrayIndex(positions,0),getArrayIndex(positions,2), marker='^', color='grey')
     #Agregamos las etiquetas y añadimos una leyenda.
@@ -65,5 +131,27 @@ def graphPositionAndLightByTime(positions, lights):
     plt.ylabel('Lux and Lat/Long')
     plt.title("Variation by time")
     plt.legend(["Light", "Latitude", "Longitude"], loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+def graphPositionAndLightByTimeToList(positions, lights):
+
+    LightMarker = mlines.Line2D([], [], color='blue', marker='+', linestyle='None', markersize=10, label='Light')
+    LatitudeMarker = mlines.Line2D([], [], color='blue', marker='*', linestyle='None', markersize=10, label='Latitude')
+    LongitudeMarker = mlines.Line2D([], [], color='blue', marker='^', linestyle='None', markersize=10, label='Longitude')
+    #scaler = preprocessing.MinMaxScaler(feature_range=(0,1))
+    
+    fig, ax = plt.subplots()
+    for light in lights:
+        ax.plot(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
+    for position in positions:
+        ax.plot(getArrayIndex(position,0),getArrayIndex(position,1), marker='*')
+    for position in positions:
+        ax.plot(getArrayIndex(position,0),getArrayIndex(position,2), marker='^')
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Lux and Lat/Long')
+    plt.title("Variation by time")
+    plt.legend(handles=[LightMarker, LatitudeMarker, LongitudeMarker], loc="upper left")
     plt.savefig('grafica_lineal.png')
     plt.show()

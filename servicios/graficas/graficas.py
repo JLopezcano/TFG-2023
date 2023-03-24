@@ -48,8 +48,30 @@ def graphLocalization(positions):
 #    plt.legend()
     plt.savefig('grafica_lineal.png')
     plt.show()
+    
+def graphLocalizationsInOrder(position):
+    arrayLegend = []
+    colorGraph = ['black', 'grey', 'yellow', 'green', 'purple', 'blue', 'pink', 'red', 'orange', 'gold',
+                  'lime', 'brown', 'turquoise', 'olivedrab', 'darkkhaki', 'teal', 'sienna', 'peru', 'tan']
+    
+    for posi in position:
+        x = np.array(posi[2])
+        y = np.array(posi[1])
+        arrayLegend.append(position.index(posi)+1)
+        plt.legend(loc="upper center")
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.title("Localizations")
+        plt.plot(x, y, "-ok", label = str(position.index(posi)+1), color=colorGraph[position.index(posi)])
+    # Gráfico
+    x = np.array(getArrayIndex(position,2))
+    y = np.array(getArrayIndex(position,1))
+    #arrayLegend.append("text"+ str(position.index(position)+1))
+    # Gráfico
+    plt.plot(x, y, label = "pixel", color='grey')
+    plt.show()
 
-def graphLocalizationInOrder(positions):
+def graphLocalizationInList(positions):
     arrayLegend = []
     
    # for posi in position:

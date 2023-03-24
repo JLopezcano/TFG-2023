@@ -47,8 +47,8 @@ def main1():
         minLight = minimunLight(lights)
         lightNormalized.append(normalizeLight(light, maxLight, minLight))
     
-    graphLocalizationInOrder(positions[0])
-    graphLocalization(positions)
+    graphLocalizationInList(positions[0])
+    graphLocalizationsInOrder(positions[0])
     
     graphLightByTimeToList(lightNormalized)
     graphLatitudeByTimeToList(positions)

@@ -49,9 +49,10 @@ def graphLocalization(positions):
     plt.savefig('grafica_lineal.png')
     plt.show()
     
+"""
 def graphLocalizationsInOrder(position):
     arrayLegend = []
-    colorGraph = ['black', 'grey', 'yellow', 'green', 'purple', 'blue', 'pink', 'red', 'orange', 'gold',
+    colourGraph = ['black', 'grey', 'yellow', 'green', 'purple', 'blue', 'pink', 'red', 'orange', 'gold',
                   'lime', 'brown', 'turquoise', 'olivedrab', 'darkkhaki', 'teal', 'sienna', 'peru', 'tan']
     
     for posi in position:
@@ -62,10 +63,33 @@ def graphLocalizationsInOrder(position):
         plt.xlabel('X')
         plt.ylabel('Y')
         plt.title("Localizations")
-        plt.plot(x, y, "-ok", label = str(position.index(posi)+1), color=colorGraph[position.index(posi)])
+        plt.plot(x, y, "-ok", label = str(position.index(posi)+1), color=colourGraph[position.index(posi)])
     # Gráfico
     x = np.array(getArrayIndex(position,2))
     y = np.array(getArrayIndex(position,1))
+    #arrayLegend.append("text"+ str(position.index(position)+1))
+    # Gráfico
+    plt.plot(x, y, label = "pixel", color='grey')
+    plt.show()
+"""
+
+def graphLocalizationsInOrder(position, positions):
+    arrayLegend = []
+    colourGraph = ['black', 'grey', 'yellow', 'green', 'purple', 'blue', 'pink', 'red', 'orange', 'gold',
+                  'lime', 'brown', 'turquoise', 'olivedrab', 'darkkhaki', 'teal', 'sienna', 'peru', 'tan']
+    
+    for posi in position:
+        x = np.array(posi[2])
+        y = np.array(posi[1])
+        arrayLegend.append(position.index(posi)+1)
+        plt.legend(loc="upper center")
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.title("Localizations")
+        plt.plot(x, y, "-ok", label = str(position.index(posi)+1), color=colourGraph[position.index(posi)])
+    # Gráfico
+    x = np.array(getArrayIndex(positions,2))
+    y = np.array(getArrayIndex(positions,1))
     #arrayLegend.append("text"+ str(position.index(position)+1))
     # Gráfico
     plt.plot(x, y, label = "pixel", color='grey')
@@ -175,5 +199,21 @@ def graphPositionAndLightByTimeToList(positions, lights):
     plt.ylabel('Lux and Lat/Long')
     plt.title("Variation by time")
     plt.legend(handles=[LightMarker, LatitudeMarker, LongitudeMarker], loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+def graphLuxByLocalization(lights):
+    #LightMarker = mlines.Line2D([], [], color='blue', marker='+', linestyle='None', markersize=10, label='Light')
+    arrayLegend = []
+    
+    fig, ax = plt.subplots()
+    for light in lights:
+        ax.plot(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
+        arrayLegend.append("text"+ str(lights.index(light)+1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Lux and Lat/Long')
+    plt.title("Variation by time")
+    plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
     plt.show()

@@ -33,23 +33,20 @@ def main1():
     files = os.listdir(filePath)
     
     lights, positions = readFilesToLists(files, extension, filePath)
-    positionNormalized = []
-    lightNormalized = []
     lightsInPosition = []
 
-    lightsInPosition = (lightByPosition(lights, positions))
-    for position in positions:
-        maxPosition, maxPosition2 = maximunPosition(positions)
-        minPosition, minPosition2 = minimunPosition(positions)
-        positionNormalized.append(normalizePosition(position, maxPosition, maxPosition2, minPosition, minPosition2))
-    for light in lights:
-        maxLight = maximunLight(lights)
-        minLight = minimunLight(lights)
-        lightNormalized.append(normalizeLight(light, maxLight, minLight))
+    lightsInPosition = lightByPosition(lights, positions)
+    positionNormalized, lightNormalized = normalization(positions, lights)
+    positionBegining, positionEnd = positionsCapped(positions)
     
     graphLocalizationInList(positions[0])
-    graphLocalizationsInOrder(positions[0])
+    graphLocalizationsInOrder(positionBegining[0], positions[0])
+    graphLocalizationsInOrder(positionEnd[0], positions[0])
     
+    luxInPositions = luxesCappedByPos(lightsInPosition, positions)
+    graphLuxByLocalization(luxInPositions)
+    
+    """
     graphLightByTimeToList(lightNormalized)
     graphLatitudeByTimeToList(positions)
     graphLongitudeByTimeToList(positions)
@@ -68,10 +65,11 @@ def main1():
     maxLight = maximunLightSimpleTxt(lightsInPosition[0])
     minLight = minimunLightSimpleTxt(lightsInPosition[0])
     simpleLightNormalized = (normalizeLight(lightsInPosition[0], maxLight, minLight))
-        
+    
     graphPositionAndLightByTimeToList(positionNormalized, lightsInPositionNormalized)
     
     for position in positionNormalized:
         graphPositionAndLightByTime(positionNormalized[positionNormalized.index(position)], simpleLightNormalized)
+"""
 
 main1()

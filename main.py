@@ -44,7 +44,31 @@ def main1():
     graphLocalizationsInOrder(positionEnd[0], positions[0])
     
     luxInPositions = luxesCappedByPos(lightsInPosition, positions)
+    luxInPositionsMinusMean = []
+    luxInPositionsMinusThreash = []
+
+    for light in luxInPositions:
+        maxLux = maximunLightSimpleTxt(light)
+        minLux = minimunLightSimpleTxt(light)
+        luxInPositionsMinusThreash.append(minusThreshLights(light, maxLux, minLux))
+    
     graphLuxByLocalization(luxInPositions)
+    graphLuxByLocalization(luxInPositionsMinusThreash)
+
+    for light in luxInPositions:
+        mean = meanLightSimpleTxt(light)
+        luxInPositionsMinusMean.append(minusMeanLights(light, mean))
+        
+    graphLuxByLocalization(luxInPositionsMinusMean)
+    
+    """
+    means = []
+    
+    for light in luxInPositionsMinusMean:
+        means.append(lightMeanPosition(light))
+    
+    graphLuxByLocalizationMean(luxInPositionsMinusMean, means)
+    """
     
     """
     graphLightByTimeToList(lightNormalized)

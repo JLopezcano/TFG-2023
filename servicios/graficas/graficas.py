@@ -82,11 +82,12 @@ def graphLocalizationsInOrder(position, positions):
         x = np.array(posi[2])
         y = np.array(posi[1])
         arrayLegend.append(position.index(posi)+1)
-        plt.legend(loc="upper center")
         plt.xlabel('X')
         plt.ylabel('Y')
         plt.title("Localizations")
-        plt.plot(x, y, "-ok", label = str(position.index(posi)+1), color=colourGraph[position.index(posi)])
+        plt.plot(x, y, "-ok", label = str(position.index(posi)), color=colourGraph[position.index(posi)])
+    plt.legend(arrayLegend, loc="upper center")
+    
     # Gráfico
     x = np.array(getArrayIndex(positions,2))
     y = np.array(getArrayIndex(positions,1))
@@ -211,6 +212,26 @@ def graphLuxByLocalization(lights):
         ax.plot(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
         arrayLegend.append("text"+ str(lights.index(light)+1))
     #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Time')
+    plt.ylabel('Lux and Lat/Long')
+    plt.title("Variation by time")
+    plt.legend(arrayLegend, loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+
+def graphLuxByLocalizationMean(lights, means):
+    arrayLegend = []
+    
+    fig, ax = plt.subplots()
+    for light in lights:
+        ax.plot(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
+        arrayLegend.append("text"+ str(lights.index(light)+1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    x = np.array(getArrayIndex(means,2))
+    y = np.array(getArrayIndex(means,1))
+    # Gráfico
+    plt.plot(x, y, label = "pixel", color='grey')
+    plt.show()
     plt.xlabel('Time')
     plt.ylabel('Lux and Lat/Long')
     plt.title("Variation by time")

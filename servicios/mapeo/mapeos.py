@@ -186,12 +186,56 @@ def luxesCappedByPos(lights, positions):
                 auxTime2 = posi[0] + 0.5 #2.0
                 if (light[0] <= auxTime2) and (light[0] >= auxTime1):
                     if (position.index(posi) > int(len(position)/2)):
-                         auxColumn.append("position" + (str(position.index(posi) - int(len(position)/2))))
-                         auxColumn.append(light[1])
-                    else:
-                        auxColumn.append("position" + str(position.index(posi)+1))
+                        a = 0
+                        auxColumn.append("position" + (str(int(len(position)/2) + 1 - (position.index(posi) - int(len(position)/2)))))
                         auxColumn.append(light[1])
-                    aux.append(auxColumn)
+                    else:
+                        if ((position.index(posi) + 1) == 8):
+                            auxColumn.append("position7")
+                        else:
+                            auxColumn.append("position" + str(position.index(posi) + 1))
+                        auxColumn.append(light[1])
+                        aux.append(auxColumn)
         auxList.append(aux)
-
+        
     return auxList
+
+def minusThreshLights(array, max, min):
+    newArray = []
+    
+    mean = (max + min) / 2
+    for element in array:
+        auxNum = [element[0], element[1]-mean]
+        newArray.append(auxNum)
+    
+    return newArray
+
+def meanLightSimpleTxt(array):
+    value = 0
+    count = 0
+    
+    for light in array:
+        count = count + 1
+        value = value + light[1]
+    
+    mean = value / count
+    
+    return mean
+
+def minusMeanLights(light, mean):
+    newArray = []
+    
+    for element in light:
+        auxNum = [element[0], element[1]-mean]
+        newArray.append(auxNum)
+    
+    return newArray
+
+"""
+def lightMeanPosition(array):
+    newArray = []
+    
+    for element in array:
+        
+        
+"""

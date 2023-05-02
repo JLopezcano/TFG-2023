@@ -209,7 +209,7 @@ def graphLuxByLocalization(lights):
     
     fig, ax = plt.subplots()
     for light in lights:
-        ax.plot(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
+        ax.scatter(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')       #ax.plot
         arrayLegend.append("text"+ str(lights.index(light)+1))
     #Agregamos las etiquetas y añadimos una leyenda.
     plt.xlabel('Time')
@@ -224,14 +224,13 @@ def graphLuxByLocalizationMean(lights, means):
     
     fig, ax = plt.subplots()
     for light in lights:
-        ax.plot(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
+        ax.scatter(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
         arrayLegend.append("text"+ str(lights.index(light)+1))
     #Agregamos las etiquetas y añadimos una leyenda.
-    x = np.array(getArrayIndex(means,2))
+    x = np.array(getArrayIndex(means,0))
     y = np.array(getArrayIndex(means,1))
     # Gráfico
     plt.plot(x, y, label = "pixel", color='grey')
-    plt.show()
     plt.xlabel('Time')
     plt.ylabel('Lux and Lat/Long')
     plt.title("Variation by time")

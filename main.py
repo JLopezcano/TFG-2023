@@ -45,6 +45,24 @@ def main1():
     
     luxInPositions = luxesCappedByPos(lightsInPosition, positions)
     luxInPositionsMinusMean = []
+
+    for light in luxInPositions:
+        mean = meanLightSimpleTxt(light)
+        luxInPositionsMinusMean.append(minusMeanLights(light, mean))
+    
+    graphLuxByLocalization(luxInPositionsMinusMean)
+    
+    lightsOrdered = groupLightsMinusMean(luxInPositions)
+    lightsOrderedMean = arrayWithLightMeans(lightsOrdered)
+    
+    graphLuxByLocalizationMean(luxInPositions, lightsOrderedMean)
+    
+    lightsOrderedMinusMean = groupLightsMinusMean(luxInPositionsMinusMean)
+    lightsOrderedMeanMinusMean = arrayWithLightMeans(lightsOrderedMinusMean)
+    
+    graphLuxByLocalizationMean(luxInPositionsMinusMean, lightsOrderedMeanMinusMean)
+    
+    """
     luxInPositionsMinusThreash = []
 
     for light in luxInPositions:
@@ -54,14 +72,8 @@ def main1():
     
     graphLuxByLocalization(luxInPositions)
     graphLuxByLocalization(luxInPositionsMinusThreash)
-
-    for light in luxInPositions:
-        mean = meanLightSimpleTxt(light)
-        luxInPositionsMinusMean.append(minusMeanLights(light, mean))
-        
-    graphLuxByLocalization(luxInPositionsMinusMean)
     
-    """
+    
     means = []
     
     for light in luxInPositionsMinusMean:

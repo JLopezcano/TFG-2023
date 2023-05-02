@@ -231,11 +231,35 @@ def minusMeanLights(light, mean):
     
     return newArray
 
-"""
-def lightMeanPosition(array):
+def groupLightsMinusMean(lights):
+    newArray = []
+    numeroMayor = 0
+    
+    for light in lights:
+        for element in light:
+            pi = element[0]
+            if (int(pi.replace("position","")) > numeroMayor) :
+                numeroMayor = int(pi.replace("position",""))
+
+    count = 1
+    while count <= numeroMayor:
+        arrayPosition=[]
+        for light in lights:
+            for element in light:
+                if "position" + str(count) == element[0]:
+                    arrayPosition.append(element)
+        newArray.append(arrayPosition)
+        count = count + 1
+        
+    return newArray
+                    
+def arrayWithLightMeans(lights):
     newArray = []
     
-    for element in array:
-        
-        
-"""
+    for light in lights:
+        array = []
+        array.append("position" + str(lights.index(light) + 1))
+        array.append(meanLightSimpleTxt(light))
+        newArray.append(array)
+    
+    return newArray

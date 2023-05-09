@@ -54,13 +54,17 @@ def main1():
     
     lightsOrdered = groupLightsMinusMean(luxInPositions)
     lightsOrderedMean = arrayWithLightMeans(lightsOrdered)
-    
+        
     graphLuxByLocalizationMean(luxInPositions, lightsOrderedMean)
     
     lightsOrderedMinusMean = groupLightsMinusMean(luxInPositionsMinusMean)
     lightsOrderedMeanMinusMean = arrayWithLightMeans(lightsOrderedMinusMean)
     
     graphLuxByLocalizationMean(luxInPositionsMinusMean, lightsOrderedMeanMinusMean)
+    
+    graphLuxByLocalizationMeanBoxplots(lightsOrderedMeanMinusMean)
+    
+    graphLuxByLocalizationPositionsBoxplots(lightsOrderedMinusMean)
     
     """
     luxInPositionsMinusThreash = []
@@ -107,5 +111,9 @@ def main1():
     for position in positionNormalized:
         graphPositionAndLightByTime(positionNormalized[positionNormalized.index(position)], simpleLightNormalized)
 """
+
+def main2():
+    
+    print("")
 
 main1()

@@ -212,8 +212,8 @@ def graphLuxByLocalization(lights):
         ax.scatter(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')       #ax.plot
         arrayLegend.append("text"+ str(lights.index(light)+1))
     #Agregamos las etiquetas y añadimos una leyenda.
-    plt.xlabel('Time')
-    plt.ylabel('Lux and Lat/Long')
+    plt.xlabel('Position')
+    plt.ylabel('Lux')
     plt.title("Variation by time")
     plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
@@ -226,14 +226,67 @@ def graphLuxByLocalizationMean(lights, means):
     for light in lights:
         ax.scatter(getArrayIndex(light,0),getArrayIndex(light,1), marker='+')
         arrayLegend.append("text"+ str(lights.index(light)+1))
+
     #Agregamos las etiquetas y añadimos una leyenda.
+    
     x = np.array(getArrayIndex(means,0))
     y = np.array(getArrayIndex(means,1))
     # Gráfico
     plt.plot(x, y, label = "pixel", color='grey')
-    plt.xlabel('Time')
-    plt.ylabel('Lux and Lat/Long')
-    plt.title("Variation by time")
+    plt.xlabel('Position')
+    plt.ylabel('Lux')
+    plt.title("Variation by Positions")
     plt.legend(arrayLegend, loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+def graphLuxByLocalizationMeanBoxplots(ordereds):
+    array = []
+    newArray = []
+    
+    fig, ax = plt.subplots()
+
+    positionArray=[]
+    for ordered in ordereds:
+            positionArray.append(ordered[0])
+    
+    for position in positionArray:
+        for ordered in ordereds:
+            if ordered[0]==position:
+                array.append(ordered[1])
+        newArray.append(array)
+        array=[]
+
+    bp = ax.boxplot(newArray) 
+    
+    #Agregamos las etiquetas y añadimos una leyenda.
+    
+    # Gráfico
+    plt.xlabel('Position')
+    plt.ylabel('Lux')
+    plt.title("Aproximated Luxes in mean")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+
+def graphLuxByLocalizationPositionsBoxplots(ordereds):
+    array = []
+    newArray = []
+    
+    fig, ax = plt.subplots()
+
+    for ordered in ordereds:
+        for positions in ordered:
+            array.append(positions[1])
+        newArray.append(array)
+        array=[]
+        
+    bp = ax.boxplot(newArray) 
+    
+    #Agregamos las etiquetas y añadimos una leyenda.
+    
+    # Gráfico
+    plt.xlabel('Position')
+    plt.ylabel('Lux')
+    plt.title("Aproximated Luxes minus mean")
     plt.savefig('grafica_lineal.png')
     plt.show()

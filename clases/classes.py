@@ -5,7 +5,8 @@ class data:
     light = 'light'
     POSI = 'POSI'
     LIGH = 'LIGH'
-
+    wifi = 'wifi'
+    WIFI = 'WIFI'
 
 
 class colours(Enum):

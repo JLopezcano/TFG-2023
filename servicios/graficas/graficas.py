@@ -5,7 +5,7 @@ import matplotlib.lines as mlines
 from sklearn import preprocessing
 
 from servicios.mapeo.mapeos import getArrayIndex
-from servicios.mapeo.mapeos import lightFormat
+#from servicios.mapeo.mapeos import lightFormat
 from clases.classes import colours
 
 def graphLightByTime(lights):
@@ -48,30 +48,7 @@ def graphLocalization(positions):
 #    plt.legend()
     plt.savefig('grafica_lineal.png')
     plt.show()
-    
-"""
-def graphLocalizationsInOrder(position):
-    arrayLegend = []
-    colourGraph = ['black', 'grey', 'yellow', 'green', 'purple', 'blue', 'pink', 'red', 'orange', 'gold',
-                  'lime', 'brown', 'turquoise', 'olivedrab', 'darkkhaki', 'teal', 'sienna', 'peru', 'tan']
-    
-    for posi in position:
-        x = np.array(posi[2])
-        y = np.array(posi[1])
-        arrayLegend.append(position.index(posi)+1)
-        plt.legend(loc="upper center")
-        plt.xlabel('X')
-        plt.ylabel('Y')
-        plt.title("Localizations")
-        plt.plot(x, y, "-ok", label = str(position.index(posi)+1), color=colourGraph[position.index(posi)])
-    # Gráfico
-    x = np.array(getArrayIndex(position,2))
-    y = np.array(getArrayIndex(position,1))
-    #arrayLegend.append("text"+ str(position.index(position)+1))
-    # Gráfico
-    plt.plot(x, y, label = "pixel", color='grey')
-    plt.show()
-"""
+
 
 def graphLocalizationsInOrder(position, positions):
     arrayLegend = []
@@ -82,8 +59,8 @@ def graphLocalizationsInOrder(position, positions):
         x = np.array(posi[2])
         y = np.array(posi[1])
         arrayLegend.append(position.index(posi)+1)
-        plt.xlabel('X')
-        plt.ylabel('Y')
+        plt.xlabel('Longitude')
+        plt.ylabel('Latitude')
         plt.title("Localizations")
         plt.plot(x, y, "-ok", label = str(position.index(posi)), color=colourGraph[position.index(posi)])
     plt.legend(arrayLegend, loc="upper center")
@@ -108,8 +85,8 @@ def graphLocalizationInList(positions):
     
     plt.plot(x, y, "-ok", label = "Puntos")
     plt.legend(loc = "upper right")
-    plt.xlabel('X')
-    plt.ylabel('Y')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
     plt.title("Localizations")
     plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
@@ -168,7 +145,7 @@ def graphLongitudeByTimeToList(positions):
     plt.show()
 
 def graphPositionAndLightByTime(positions, lights):
-    #lights = lightFormat(lights)
+    
     fig, ax = plt.subplots()
     ax.plot(getArrayIndex(lights,0),getArrayIndex(lights,1), marker='+', color='black')
     ax.plot(getArrayIndex(positions,0),getArrayIndex(positions,1), marker='*', color='green')
@@ -267,7 +244,7 @@ def graphLuxByLocalizationMeanBoxplots(ordereds):
     plt.title("Aproximated Luxes in mean")
     plt.savefig('grafica_lineal.png')
     plt.show()
-
+    
 def graphLuxByLocalizationPositionsBoxplots(ordereds):
     array = []
     newArray = []
@@ -277,6 +254,44 @@ def graphLuxByLocalizationPositionsBoxplots(ordereds):
     for ordered in ordereds:
         for positions in ordered:
             array.append(positions[1])
+        newArray.append(array)
+        array=[]
+        
+    bp = ax.boxplot(newArray) 
+    
+    #Agregamos las etiquetas y añadimos una leyenda.
+    
+    # Gráfico
+    plt.xlabel('Position')
+    plt.ylabel('Lux')
+    plt.title("Aproximated Luxes minus mean")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+def graphWifisByPositions(wifis):
+    arrayLegend = []
+    
+    fig, ax = plt.subplots()
+    for wifi in wifis:
+        ax.scatter(getArrayIndex(wifi,-1),getArrayIndex(wifi,3), marker='+')       #ax.plot
+        arrayLegend.append("text"+ str(wifis.index(wifi)+1))
+    #Agregamos las etiquetas y añadimos una leyenda.
+    plt.xlabel('Positions')
+    plt.ylabel('Wifi RSS(dBm)')
+    plt.title("Wifi RSS by Positions")
+    plt.legend(arrayLegend, loc="upper left")
+    plt.savefig('grafica_lineal.png')
+    plt.show()
+    
+def graphWifisByPositionsBoxplots(wifis):
+    array = []
+    newArray = []
+    
+    fig, ax = plt.subplots()
+
+    for wifi in wifis:
+        for element in wifi:
+            array.append(element[3])
         newArray.append(array)
         array=[]
         

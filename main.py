@@ -6,6 +6,7 @@ from servicios.rutas.rutas import *
 from servicios.graficas.graficas import *
 from clases.classes import colours
 from servicios.mapeo.mapeos import *
+from servicios.mapeo.mapeosWifi import *
 
 def main():
     filePath = Path(sys.argv[1])
@@ -28,13 +29,14 @@ def main1():
     filePath = Path(sys.argv[1])
     positions = []
     lights = []
+    wifis = []
     extension = ".txt"
     files = []
     files = os.listdir(filePath)
     
-    lights, positions = readFilesToLists(files, extension, filePath)
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
+    
     lightsInPosition = []
-
     lightsInPosition = lightByPosition(lights, positions)
     positionNormalized, lightNormalized = normalization(positions, lights)
     positionBegining, positionEnd = positionsCapped(positions)
@@ -63,6 +65,8 @@ def main1():
     graphLuxByLocalizationMean(luxInPositionsMinusMean, lightsOrderedMeanMinusMean)
     
     graphLuxByLocalizationMeanBoxplots(lightsOrderedMeanMinusMean)
+
+    graphLuxByLocalizationPositionsBoxplots(lightsOrdered)
     
     graphLuxByLocalizationPositionsBoxplots(lightsOrderedMinusMean)
     
@@ -114,6 +118,26 @@ def main1():
 
 def main2():
     
-    print("")
+    filePath = Path(sys.argv[1])
+    positions = []
+    lights = []
+    wifis = []
+    extension = ".txt"
+    files = []
+    files = os.listdir(filePath)
+    
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
 
-main1()
+    wifisInPosition = []
+    #wifisInPosition = wifiByPosition(wifis, positions)
+    wifisInPosition = wifiCappedByPosition(wifis, positions)
+    
+    wifisCappedSSID1 = []
+    wifisCappedSSID1 = wifiCapBySSID(wifisInPosition)
+    wifisCappedFrequency = []
+    wifisCappedFrequency = wifiCapByFrequency(wifisCappedSSID1)
+
+    graphWifisByPositions(wifisCappedFrequency)
+    graphWifisByPositionsBoxplots(wifisCappedFrequency)
+    
+main2()

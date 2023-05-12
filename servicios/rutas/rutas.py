@@ -25,6 +25,7 @@ def readFiles(files, extension, filePath):
 def readFilesToLists(files, extension, filePath):
     lights = []
     positions = []
+    wifis = []
         
     for file in files:
         fullPath = ""
@@ -34,17 +35,23 @@ def readFilesToLists(files, extension, filePath):
             lines = file.readlines()
             fileLight = []
             filePosition = []
+            fileWifi = []
 
             for line in lines:
-                if  line.startswith(data.LIGH):
-                    formatted = format(line[5:-1].split(';'),data.light)
+                if line.startswith(data.LIGH):
+                    formatted = format(line[5:-1].split(';'),data.light,0)
                     fileLight.append(formatted) 
                     
                 if line.startswith(data.POSI):
-                    formatted = format(line[5:-1].split(';'),data.position)
+                    formatted = format(line[5:-1].split(';'),data.position,0)
                     filePosition.append(formatted)
+                
+                if line.startswith(data.WIFI):
+                    formatted = format(line[5:-1].split(';'),data.wifi,1)
+                    fileWifi.append(formatted)
             
             lights.append(fileLight)
             positions.append(filePosition)
+            wifis.append(fileWifi)
     
-    return lights, positions
+    return lights, positions, wifis

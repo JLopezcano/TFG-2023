@@ -71,6 +71,7 @@ def graphLocalizationsInOrder(position, positions):
     #arrayLegend.append("text"+ str(position.index(position)+1))
     # Gráfico
     plt.plot(x, y, label = "pixel", color='grey')
+    plt.grid()
     plt.show()
 
 def graphLocalizationInList(positions):
@@ -84,6 +85,7 @@ def graphLocalizationInList(positions):
     fig, ax = plt.subplots()
     
     plt.plot(x, y, "-ok", label = "Puntos")
+    plt.grid()
     plt.legend(loc = "upper right")
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
@@ -194,6 +196,7 @@ def graphLuxByLocalization(lights):
     plt.title("Variation by time")
     plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
+    plt.grid()
     plt.show()
 
 def graphLuxByLocalizationMean(lights, means):
@@ -210,6 +213,7 @@ def graphLuxByLocalizationMean(lights, means):
     y = np.array(getArrayIndex(means,1))
     # Gráfico
     plt.plot(x, y, label = "pixel", color='grey')
+    plt.grid()
     plt.xlabel('Position')
     plt.ylabel('Lux')
     plt.title("Variation by Positions")
@@ -243,6 +247,7 @@ def graphLuxByLocalizationMeanBoxplots(ordereds):
     plt.ylabel('Lux')
     plt.title("Aproximated Luxes in mean")
     plt.savefig('grafica_lineal.png')
+    plt.grid()
     plt.show()
     
 def graphLuxByLocalizationPositionsBoxplots(ordereds):
@@ -266,12 +271,19 @@ def graphLuxByLocalizationPositionsBoxplots(ordereds):
     plt.ylabel('Lux')
     plt.title("Aproximated Luxes minus mean")
     plt.savefig('grafica_lineal.png')
+    plt.grid()
     plt.show()
     
-def graphWifisByPositions(wifis):
+def graphWifisByPositions(wifis, means):
     arrayLegend = []
     
     fig, ax = plt.subplots()
+         
+    x = np.array(getArrayIndex(means,1))
+    y = np.array(getArrayIndex(means,0))
+    arrayLegend.append("Txt de datos:")
+    plt.plot(x, y, label = "pixel", color='white')
+    
     for wifi in wifis:
         ax.scatter(getArrayIndex(wifi,-1),getArrayIndex(wifi,3), marker='+')       #ax.plot
         arrayLegend.append("text"+ str(wifis.index(wifi)+1))
@@ -281,6 +293,7 @@ def graphWifisByPositions(wifis):
     plt.title("Wifi RSS by Positions")
     plt.legend(arrayLegend, loc="upper left")
     plt.savefig('grafica_lineal.png')
+    plt.grid()
     plt.show()
     
 def graphWifisByPositionsBoxplots(wifis):
@@ -304,4 +317,5 @@ def graphWifisByPositionsBoxplots(wifis):
     plt.ylabel('Lux')
     plt.title("Aproximated Luxes minus mean")
     plt.savefig('grafica_lineal.png')
+    plt.grid()
     plt.show()

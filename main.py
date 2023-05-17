@@ -136,8 +136,22 @@ def main2():
     wifisCappedSSID1 = wifiCapBySSID(wifisInPosition)
     wifisCappedFrequency = []
     wifisCappedFrequency = wifiCapByFrequency(wifisCappedSSID1)
+    
+    wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
+    wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
+    
+    wifisMeanByPosition = wifiGetMeanByPosition(wifisOrderedsBoxplot)
+    wifisMinusMean = wifiMinusPositionMeans(wifisCappedFrequency, wifisMeanByPosition)
 
-    graphWifisByPositions(wifisCappedFrequency)
-    graphWifisByPositionsBoxplots(wifisCappedFrequency)
+    graphWifisByPositions(wifisOrderedPositions, wifisMeanByPosition)
+    
+    wifisOrderedsInPositionMinusMeans = wifiOrderingPositionsForBoxplot(wifisMinusMean)
+    wifisMeansMinusMeans = wifiGetMeanByPosition(wifisOrderedsInPositionMinusMeans)
+    
+    print(wifisMeansMinusMeans)
+    graphWifisByPositions(wifisMinusMean, wifisMeansMinusMeans)
+    
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplot)
+    graphWifisByPositionsBoxplots(wifisOrderedsInPositionMinusMeans)
     
 main2()

@@ -314,8 +314,8 @@ def graphWifisByPositionsBoxplots(wifis):
     
     # Gráfico
     plt.xlabel('Position')
-    plt.ylabel('Lux')
-    plt.title("Aproximated Luxes minus mean")
+    plt.ylabel('RSS (dBm)')
+    plt.title("Aproximated RSS minus mean")
     plt.savefig('grafica_lineal.png')
     plt.grid()
     plt.show()

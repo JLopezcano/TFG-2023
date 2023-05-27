@@ -140,18 +140,28 @@ def main2():
     wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
     wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
     
+    wifisMeansByPosition = wifiGetMeanByPosition(wifisOrderedsBoxplot)
+    
+    """
     wifisMeanByPosition = wifiGetMeanByPosition(wifisOrderedsBoxplot)
-    wifisMinusMean = wifiMinusPositionMeans(wifisCappedFrequency, wifisMeanByPosition)
+    wifisMinusMeanPosition = wifiMinusPositionMeans(wifisCappedFrequency, wifisMeanByPosition)
 
     graphWifisByPositions(wifisOrderedPositions, wifisMeanByPosition)
+    """
+    wifisMinusMeanTxt = []
     
-    wifisOrderedsInPositionMinusMeans = wifiOrderingPositionsForBoxplot(wifisMinusMean)
-    wifisMeansMinusMeans = wifiGetMeanByPosition(wifisOrderedsInPositionMinusMeans)
+    for wifi in wifisOrderedPositions:
+        mean = getMeanWifiSimpleTxt(wifi)
+        wifisMinusMeanTxt.append(wifiMinusTxtMeans(wifi, mean))
+        
+    wifisOrderedsBoxplotMinusMeans = wifiOrderingPositionsForBoxplot(wifisMinusMeanTxt)
+    wifisMeansMinusMeans = wifiGetMeanByPosition(wifisOrderedsBoxplotMinusMeans)
     
-    print(wifisMeansMinusMeans)
-    graphWifisByPositions(wifisMinusMean, wifisMeansMinusMeans)
+    graphWifisByPositions(wifisOrderedPositions, wifisMeansByPosition)
+    
+    graphWifisByPositions(wifisMinusMeanTxt, wifisMeansMinusMeans)
     
     graphWifisByPositionsBoxplots(wifisOrderedsBoxplot)
-    graphWifisByPositionsBoxplots(wifisOrderedsInPositionMinusMeans)
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplotMinusMeans)
     
 main2()

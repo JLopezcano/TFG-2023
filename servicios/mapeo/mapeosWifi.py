@@ -126,6 +126,37 @@ def wifiOrderingPositionsForBoxplot(wifis):
         
     return newArray
 
+def getMeanWifiSimpleTxt(array):
+    value = 0
+    count = 0
+    
+    for wifi in array:
+        count = count + 1
+        value = value + wifi[3]
+    
+    if value == 0:
+        mean = 0
+    else:
+        mean = value / count
+    
+    return mean
+
+def wifiMinusTxtMeans(wifi, mean):
+    newArray = []
+    
+    for element in wifi:
+        auxNum = []
+        count = 0
+        for value in element:
+            if count == 3:
+                auxNum.append(value - mean)
+            else:
+                auxNum.append(value)
+            count = count + 1
+        newArray.append(auxNum)
+    
+    return newArray
+
 def wifiGetMeanByPosition(wifis):
     newArray = []
     array = []

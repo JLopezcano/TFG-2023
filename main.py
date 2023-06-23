@@ -7,6 +7,7 @@ from servicios.graficas.graficas import *
 from clases.classes import colours
 from servicios.mapeo.mapeos import *
 from servicios.mapeo.mapeosWifi import *
+from servicios.mapeo.mapeosWifi2 import *
 
 def main():
     filePath = Path(sys.argv[1])
@@ -137,6 +138,8 @@ def main2():
     wifisCappedFrequency = []
     wifisCappedFrequency = wifiCapByFrequency(wifisCappedSSID1)
     
+    print(wifisCappedSSID1)
+    
     wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
     wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
     
@@ -161,7 +164,142 @@ def main2():
     
     graphWifisByPositions(wifisMinusMeanTxt, wifisMeansMinusMeans)
     
-    graphWifisByPositionsBoxplots(wifisOrderedsBoxplot)
-    graphWifisByPositionsBoxplots(wifisOrderedsBoxplotMinusMeans)
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplot, 0)
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplotMinusMeans, 1)
     
-main2()
+def main3():
+    
+    filePath = Path(sys.argv[1])
+    positions = []
+    lights = []
+    wifis = []
+    extension = ".txt"
+    files = []
+    files = os.listdir(filePath)
+    
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
+
+    wifisInPosition = []
+    #wifisInPosition = wifiByPosition(wifis, positions)
+    wifisInPosition = wifiCappedByPosition(wifis, positions)
+    
+    wifisCappedSSID2 = []
+    wifisCappedSSID2 = wifiCapBySSID2(wifisInPosition)
+    
+    wifisCappedFrequency = []
+    wifisCappedFrequency = wifiCapByFrequency2(wifisCappedSSID2)
+    
+    print(wifisCappedSSID2)
+        
+    wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
+    wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
+    
+    wifisMeansByPosition = wifiGetMeanByPosition(wifisOrderedsBoxplot)
+
+    wifisMinusMeanTxt = []
+    
+    for wifi in wifisOrderedPositions:
+        mean = getMeanWifiSimpleTxt(wifi)
+        wifisMinusMeanTxt.append(wifiMinusTxtMeans(wifi, mean))
+        
+    wifisOrderedsBoxplotMinusMeans = wifiOrderingPositionsForBoxplot(wifisMinusMeanTxt)
+    wifisMeansMinusMeans = wifiGetMeanByPosition(wifisOrderedsBoxplotMinusMeans)
+    
+    graphWifisByPositions(wifisOrderedPositions, wifisMeansByPosition)
+    
+    graphWifisByPositions(wifisMinusMeanTxt, wifisMeansMinusMeans)
+    
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplot, 0)
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplotMinusMeans, 1)
+
+def main4():
+    
+    filePath = Path(sys.argv[1])
+    positions = []
+    lights = []
+    wifis = []
+    extension = ".txt"
+    files = []
+    files = os.listdir(filePath)
+    
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
+
+    wifisInPosition = []
+    #wifisInPosition = wifiByPosition(wifis, positions)
+    wifisInPosition = wifiCappedByPosition(wifis, positions)
+    
+    wifisCappedSSID3 = []
+    wifisCappedSSID3 = wifiCapBySSID3(wifisInPosition)
+        
+    wifisCappedFrequency = []
+    wifisCappedFrequency = wifiCapByFrequency3(wifisCappedSSID3)
+    
+    print(wifisCappedSSID3)
+        
+    wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
+    wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
+    
+    wifisMeansByPosition = wifiGetMeanByPosition(wifisOrderedsBoxplot)
+
+    wifisMinusMeanTxt = []
+    
+    for wifi in wifisOrderedPositions:
+        mean = getMeanWifiSimpleTxt(wifi)
+        wifisMinusMeanTxt.append(wifiMinusTxtMeans(wifi, mean))
+                
+    wifisOrderedsBoxplotMinusMeans = wifiOrderingPositionsForBoxplot(wifisMinusMeanTxt)
+    wifisMeansMinusMeans = wifiGetMeanByPosition(wifisOrderedsBoxplotMinusMeans)
+    
+    graphWifisByPositions(wifisOrderedPositions, wifisMeansByPosition)
+    
+    graphWifisByPositions(wifisMinusMeanTxt, wifisMeansMinusMeans)
+    
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplot, 0)
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplotMinusMeans, 1)
+
+def main5():
+    
+    filePath = Path(sys.argv[1])
+    positions = []
+    lights = []
+    wifis = []
+    extension = ".txt"
+    files = []
+    files = os.listdir(filePath)
+    
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
+
+    wifisInPosition = []
+    #wifisInPosition = wifiByPosition(wifis, positions)
+    wifisInPosition = wifiCappedByPosition(wifis, positions)
+    
+    wifisCappedSSID4 = []
+    wifisCappedSSID4 = wifiCapBySSID4(wifisInPosition)
+            
+    wifisCappedFrequency = []
+    wifisCappedFrequency = wifiCapByFrequency4(wifisCappedSSID4)
+    
+    print(wifisCappedSSID4)
+        
+    wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
+    wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
+    
+    wifisMeansByPosition = wifiGetMeanByPosition(wifisOrderedsBoxplot)
+
+    wifisMinusMeanTxt = []
+    
+    for wifi in wifisOrderedPositions:
+        mean = getMeanWifiSimpleTxt(wifi)
+        wifisMinusMeanTxt.append(wifiMinusTxtMeans(wifi, mean))
+                
+    wifisOrderedsBoxplotMinusMeans = wifiOrderingPositionsForBoxplot(wifisMinusMeanTxt)
+    wifisMeansMinusMeans = wifiGetMeanByPosition(wifisOrderedsBoxplotMinusMeans)
+    
+    graphWifisByPositions(wifisOrderedPositions, wifisMeansByPosition)
+    
+    graphWifisByPositions(wifisMinusMeanTxt, wifisMeansMinusMeans)
+    
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplot, 0)
+    graphWifisByPositionsBoxplots(wifisOrderedsBoxplotMinusMeans, 1)
+    
+main5()

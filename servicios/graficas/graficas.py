@@ -296,7 +296,7 @@ def graphWifisByPositions(wifis, means):
     plt.grid()
     plt.show()
     
-def graphWifisByPositionsBoxplots(wifis):
+def graphWifisByPositionsBoxplots(wifis, minus):
     array = []
     newArray = []
     
@@ -315,7 +315,10 @@ def graphWifisByPositionsBoxplots(wifis):
     # Gráfico
     plt.xlabel('Position')
     plt.ylabel('RSS (dBm)')
-    plt.title("Aproximated RSS minus mean")
+    if (minus == 0):
+        plt.title("Aproximated RSS")
+    else:
+        plt.title("Aproximated RSS minus mean")
     plt.savefig('grafica_lineal.png')
     plt.grid()
     plt.show()

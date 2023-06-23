@@ -55,32 +55,6 @@ def wifiCappedByPosition(wifis, positions):
         
     return auxList
 
-def wifiCapBySSID(wifis):
-    newArray = []
-    array = []
-    
-    for wifi in wifis:
-        for element in wifi:
-            if (element[1] == "SSID2021_0001"):
-                array.append(element)
-        newArray.append(array)
-        array = []
-        
-    return newArray
-
-def wifiCapByFrequency(wifis):
-    newArray = []
-    array = []
-    
-    for wifi in wifis:
-        for element in wifi:
-            if (element[2] == float(2437)):
-                array.append(element)
-        newArray.append(array)
-        array = []
-        
-    return newArray
-
 def wifisOrdered(wifis):
     newArray = []
     numeroMayor = 0
@@ -169,7 +143,10 @@ def wifiGetMeanByPosition(wifis):
         for element in wifi:
             count = count + 1
             value = element[3] + value
-        mean = value / count
+        if count <= 0:
+            mean = value
+        else:
+            mean = value / count
         array.append(mean)
         array.append(element[-1])
         newArray.append(array)

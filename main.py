@@ -4,11 +4,13 @@ from pathlib import Path
 
 from servicios.rutas.rutas import *
 from servicios.graficas.graficas import *
+from servicios.graficas.graficasML import *
 from clases.classes import colours
 from servicios.mapeo.mapeos import *
 from servicios.mapeo.mapeosWifi import *
 from servicios.mapeo.mapeosWifiFilters import *
 from servicios.mapeo.mapeosWifiSingle import *
+from servicios.mapeo.mapeosML import *
 
 def main():
     filePath = Path(sys.argv[1])
@@ -118,6 +120,46 @@ def main1():
         graphPositionAndLightByTime(positionNormalized[positionNormalized.index(position)], simpleLightNormalized)
 """
 
+def mainLightML():
+    filePath = Path(sys.argv[1])
+    positions = []
+    lights = []
+    wifis = []
+    extension = ".txt"
+    files = []
+    files = os.listdir(filePath)
+    
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
+    
+    lightsInPosition = []
+    lightsInPosition = lightByPosition(lights, positions)
+    positionNormalized, lightNormalized = normalization(positions, lights)
+    positionBegining, positionEnd = positionsCapped(positions)
+ 
+    luxInPositions = luxesCappedByPos(lightsInPosition, positions)
+    luxInPositionsMinusMean = []
+
+    for light in luxInPositions:
+        mean = meanLightSimpleTxt(light)
+        luxInPositionsMinusMean.append(minusMeanLights(light, mean))
+ 
+    lightsOrdered = groupLightsMinusMean(luxInPositions)
+    lightsOrderedMean = arrayWithLightMeans(lightsOrdered)
+       
+    lightsOrderedMinusMean = groupLightsMinusMean(luxInPositionsMinusMean)
+    lightsOrderedMeanMinusMean = arrayWithLightMeans(lightsOrderedMinusMean)
+
+    graphLuxByLocalizationPositionsBoxplots(lightsOrdered)
+    
+    graphLuxByLocalizationPositionsBoxplots(lightsOrderedMinusMean)
+    
+    #Parte del ML con los lights, se implementará un SVC
+    
+    lightSamplesY = lightGetSamplesY(lightsOrdered)
+    #lightSamplesY = lightGetSamplesLightY(lightsOrdered)
+    lightsOrderedFitted = lightsFittingSamples(lightsOrdered)
+    lightML(lightsOrderedFitted, lightSamplesY)
+
 def main2():
     
     filePath = Path(sys.argv[1])
@@ -139,7 +181,7 @@ def main2():
     wifisCappedFrequency = []
     wifisCappedFrequency = wifiCapByFrequency(wifisCappedSSID1)
     
-    print(wifisCappedSSID1)
+    #print(wifisCappedSSID1)
     
     wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
     wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)
@@ -468,7 +510,8 @@ def main8():
     
     graphWifisByPositionsBoxplots(wifiExample1, 0)
     graphWifisByPositionsBoxplots(wifiExample2, 0)
+    print(wifiExample3)
     graphWifisByPositionsBoxplots(wifiExample3, 0)
-    graphWifisByPositionsBoxplots(wifiExample4, 0)
-        
-main8()
+    graphWifisByPositionsBoxplots(wifiExample4, 0)    
+    
+mainLightML()

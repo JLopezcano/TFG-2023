@@ -120,7 +120,7 @@ def main1():
         graphPositionAndLightByTime(positionNormalized[positionNormalized.index(position)], simpleLightNormalized)
 """
 
-def mainLightML():
+def mainLightMLTry():
     filePath = Path(sys.argv[1])
     positions = []
     lights = []
@@ -145,7 +145,7 @@ def mainLightML():
  
     lightsOrdered = groupLightsMinusMean(luxInPositions)
     lightsOrderedMean = arrayWithLightMeans(lightsOrdered)
-       
+    
     lightsOrderedMinusMean = groupLightsMinusMean(luxInPositionsMinusMean)
     lightsOrderedMeanMinusMean = arrayWithLightMeans(lightsOrderedMinusMean)
 
@@ -154,11 +154,23 @@ def mainLightML():
     graphLuxByLocalizationPositionsBoxplots(lightsOrderedMinusMean)
     
     #Parte del ML con los lights, se implementará un SVC
-    
+    """
     lightSamplesY = lightGetSamplesY(lightsOrdered)
-    #lightSamplesY = lightGetSamplesLightY(lightsOrdered)
     lightsOrderedFitted = lightsFittingSamples(lightsOrdered)
-    lightML(lightsOrderedFitted, lightSamplesY)
+    """
+    lightSamplesY = lightGetSamplesY(lightsOrderedMinusMean)
+    lightsOrderedFitted = lightsFittingSamples(lightsOrderedMinusMean)
+    
+    #lightML(lightsOrderedFitted, lightSamplesY)
+    
+    Xtrain = []
+    Xtest = []
+    Ytrain = []
+    Ytest = []
+    
+    Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
+    lightML(Xtrain, Ytrain, 1)
+    lightML(Xtest, Ytest, 2)
 
 def main2():
     
@@ -514,4 +526,4 @@ def main8():
     graphWifisByPositionsBoxplots(wifiExample3, 0)
     graphWifisByPositionsBoxplots(wifiExample4, 0)    
     
-mainLightML()
+mainLightMLTry()

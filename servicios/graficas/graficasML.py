@@ -2,42 +2,40 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.lines as mlines
+
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 from sklearn import preprocessing
 from sklearn import svm
 
-def lightML(lights, positions):
+def lightML(lights, positions, data):
     X = lights
     Y = positions
+    tipo = data
     
     fig, ax = plt.subplots()
     plt.xlabel('Lux (dBm)')
     plt.ylabel('Positions')
-    
-    x = []
-    y = []
-    
-    for light in lights:
-        x.append(light[0])
-        y.append(float(light[1]))
-    
-    clf = svm.SVC(kernel='linear')
-    clf.fit(X, Y)
-    
-    print(clf.predict([[96.0, 7.0]]))
-    
-    """
-    w = clf.coef_[0]
-    print(w)
 
-    a = -w[0] / w[1]
-
-    xx = np.linspace(0,7)
-    yy = a * xx - clf.intercept_[0] / w[1]
-
-    h0 = plt.plot(xx, yy, 'k-', label="non weighted div")
-    """
+    clf = svm.SVC(kernel='poly')
+    clf.fit(X, Y)       #SE HACE EL FIT SOLO CON LOS TRAINING DE LA X Y LA Y
     
-    plt.grid()
-    plt.scatter(x,y)
-    plt.show()
+    if (tipo == 1):
+        print("TRAIN")
+    else:
+        print("TEST")
     
+    YPred = clf.predict(X)      #EL PREDICT SE HACE SOLO CON EL TEST
+    
+    print(YPred)
+    print(Y)
+    
+    newX = []
+    
+    for element in X:
+        newX.append(element[0])
+    
+    print(classification_report(Y, YPred))      #MI CLASIFICATION REPORT Y LA MATRIZ DE CONFUSION UTILIZA LA YTEST CON LA Y DE LA PREDICCION
+    print(confusion_matrix(Y, YPred))
+    
+    print(confusion_matrix(Y, YPred)[0][0])

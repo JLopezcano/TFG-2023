@@ -49,4 +49,44 @@ def lightsTestSplit(lights, YSamples):
     print(newArraryYTest)
     """
     return newArraryXTrain, newArraryXTest, newArraryYTrain, newArraryYTest
+
+def printConfusionMatrix(matrix):
     
+    for row in matrix:
+        print(row)
+
+def lightsConfusionMedia(ConfusionsMatrix):
+    sumMatrix = []
+    matrixRow = []
+    
+    for list in ConfusionsMatrix:
+        if sumMatrix == []:
+            sumMatrix = list
+        else:
+            indice = 0
+            for row in list:
+                aux = []
+                matrixRow = []
+                aux = sumMatrix[indice]
+                rIndice = 0
+                for element in row:
+                    numberAux = (float(element) + float(aux[rIndice]))
+                    matrixRow.append(numberAux)
+                    rIndice = rIndice + 1
+                sumMatrix[indice] = matrixRow
+                indice = indice + 1
+    
+    mediaMatrix = []
+    
+    for sumRow in sumMatrix:
+        mediaRow = []
+        for element in sumRow:
+            mediaRow.append(element / 10)
+        mediaMatrix.append(mediaRow)   
+         
+    print()
+    print(sumMatrix)
+    print()
+    printConfusionMatrix(mediaMatrix)
+    
+    return mediaMatrix

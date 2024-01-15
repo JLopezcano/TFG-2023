@@ -163,14 +163,21 @@ def mainLightMLTry():
     
     #lightML(lightsOrderedFitted, lightSamplesY)
     
-    Xtrain = []
-    Xtest = []
-    Ytrain = []
-    Ytest = []
+    ConfusionMatrixList = []
     
-    Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
-    lightML(Xtrain, Ytrain, 1)
-    lightML(Xtest, Ytest, 2)
+    for i in range(10):
+        Xtrain = []
+        Xtest = []
+        Ytrain = []
+        Ytest = []
+        ConfusionMatrix = []
+        
+        Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
+        ConfusionMatrix = lightML(Xtrain, Ytrain, Xtest, Ytest)
+        ConfusionMatrixList.append(ConfusionMatrix)
+    
+    ConfusionMatrixMedia = lightsConfusionMedia(ConfusionMatrixList)
+    #print(ConfusionMatrixList)
 
 def main2():
     

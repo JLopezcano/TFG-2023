@@ -164,20 +164,61 @@ def mainLightMLTry():
     #lightML(lightsOrderedFitted, lightSamplesY)
     
     ConfusionMatrixList = []
+    accuracyListPoly = []
+    accuracyListRBF = []
     
-    for i in range(10):
-        Xtrain = []
-        Xtest = []
-        Ytrain = []
-        Ytest = []
-        ConfusionMatrix = []
-        
-        Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
-        ConfusionMatrix = lightML(Xtrain, Ytrain, Xtest, Ytest)
-        ConfusionMatrixList.append(ConfusionMatrix)
+    precisionListPoly = []
+    precisionListRBF = []
     
-    ConfusionMatrixMedia = lightsConfusionMedia(ConfusionMatrixList)
-    #print(ConfusionMatrixList)
+    recallListPoly = []
+    recallListRBF = []
+    
+    f1ListPoly = []
+    f1ListRBF = []
+    
+    for kern in range(2):
+        for i in range(10):
+            Xtrain = []
+            Xtest = []
+            Ytrain = []
+            Ytest = []
+            ConfusionMatrix = []
+            
+            Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
+            ConfusionMatrix, accuracy, precision, recall, f1 = lightML(Xtrain, Ytrain, Xtest, Ytest, kern)
+            ConfusionMatrixList.append(ConfusionMatrix)
+        if kern == 1:
+            ConfusionMatrixListPoly = ConfusionMatrixList
+            accuracyListPoly.append(accuracy)
+            precisionListPoly.append(precision)
+            recallListPoly.append(recall)
+            f1ListPoly.append(f1)
+        else:
+            ConfusionMatrixListRBF = ConfusionMatrixList
+            accuracyListRBF.append(accuracy)
+            precisionListRBF.append(precision)
+            recallListRBF.append(recall)
+            f1ListRBF.append(f1)
+        ConfusionMatrixList = []
+    
+    print()
+    print("POLY")
+    ConfusionMatrixPolyMedia = lightsConfusionMedia(ConfusionMatrixListPoly)
+    print()
+    accuracyPolyMean = featureMean(accuracyListPoly)
+    precisionPolyMean = featureMean(precisionListPoly)
+    recallPolyMean = featureMean(recallListPoly)
+    f1PolyMean = featureMean(f1ListPoly)
+    
+    print()
+    print("RBF")
+    ConfusionMatrixRBFMedia = lightsConfusionMedia(ConfusionMatrixListRBF)
+    print()
+    accuracyRBFMean = featureMean(accuracyListRBF)
+    precisionRBFMean = featureMean(precisionListRBF)
+    recallRBFMean = featureMean(recallListRBF)
+    f1RBFMean = featureMean(f1ListRBF)
+    print()
 
 def main2():
     
@@ -514,7 +555,14 @@ def main8():
         #id1 frec 5600 -> 5-6-7
         #id1 frec 5560 -> 2-4
         #id2 frec 2447 -> 1-3
-
+    
+    #Combinaciones totales:
+        #id1 frec 5600
+        #id1 frec 5560
+        #id2 frec 2447
+        #id3 frec 2422
+        #id6 frec 2412
+    
     wifiExample1 = []
     wifiExample1 = rellenaWifi1(wifiOrderedPosi1, wifiOrderedPosi2, wifiOrderedPosi3, wifiOrderedPosi5)
     
@@ -534,3 +582,4 @@ def main8():
     graphWifisByPositionsBoxplots(wifiExample4, 0)    
     
 mainLightMLTry()
+#main8()

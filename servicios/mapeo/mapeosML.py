@@ -90,3 +90,14 @@ def lightsConfusionMedia(ConfusionsMatrix):
     printConfusionMatrix(mediaMatrix)
     
     return mediaMatrix
+
+def featureMean(featureList):
+    mean = 0
+    
+    for feature in featureList:
+        mean = mean + feature
+    
+    mean = mean / 10
+    print(mean)
+    
+    return mean

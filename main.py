@@ -2,6 +2,10 @@ import sys
 import os
 from pathlib import Path
 
+import signal
+import sys
+signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
+
 from servicios.rutas.rutas import *
 from servicios.graficas.graficas import *
 from servicios.graficas.graficasML import *
@@ -602,8 +606,49 @@ def main8():
     graphWifisByPositionsBoxplots(wifiExample2, 0)
     print(wifiExample3)
     graphWifisByPositionsBoxplots(wifiExample3, 0)
-    graphWifisByPositionsBoxplots(wifiExample4, 0)    
+    graphWifisByPositionsBoxplots(wifiExample4, 0)
     
-#mainLightML()
-main1()
-#main()
+def selector(isFirstTime):
+    
+    if isFirstTime:
+        print("State one Valid Number between [0-9].\nEXIT to end program.")
+        print("0 To show light, latitude and longitude by time. Also shows a graph of the position \nand lux by time")
+        print("1 To show graphs of the positions in space and order in the data collecting and lux \nby localization values, with and without its mean values, and boxplots for that data")
+        print("2 To show wifi graphs in each positions ordered and minus their means for the SSID1")
+        print("3 To show wifi graphs in each positions ordered and minus their means for the SSID2")
+        print("4 To show wifi graphs in each positions ordered and minus their means for the SSID3")
+        print("5 To show wifi graphs in each positions ordered and minus their means for the SSID4")
+        print("6 To show wifi graphs in each positions ordered and minus their means for the SSID5")
+        print("7 To show wifi graphs in each positions ordered and minus their means for the SSID6")
+        print("8 To show wifi values in boxplots for 4 different examples, variating Freq and SSID")
+        print("9 To show ML light results")
+    
+    x = input()
+    if x == "EXIT":
+        return
+    
+    if x == "0":
+        main()
+    elif x == "1":
+        main1()
+    elif x == "2":
+        main2()
+    elif x == "3":
+        main3()
+    elif x == "4":
+        main4()
+    elif x == "5":
+        main5()
+    elif x == "6":
+        main6()
+    elif x == "7":
+        main7()
+    elif x == "8":
+        main8()
+    elif x == "9":
+        mainLightML()
+    else: 
+        print("State one Valid Number between [0-9]. EXIT to end program.")
+        selector(False)
+    
+selector(True)

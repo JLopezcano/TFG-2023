@@ -2,6 +2,10 @@ import sys
 import os
 from pathlib import Path
 
+import signal
+import sys
+signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
+
 from servicios.rutas.rutas import *
 from servicios.graficas.graficas import *
 from servicios.graficas.graficasML import *
@@ -16,11 +20,12 @@ def main():
     filePath = Path(sys.argv[1])
     positions = []
     lights = []
+    wifis = []
     extension = ".txt"
     files = []
     files = os.listdir(filePath)
     
-    lights, positions = readFiles(files, extension, filePath)
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
 
     graphLightByTime(lights)
     graphLocalization(positions)
@@ -120,7 +125,7 @@ def main1():
         graphPositionAndLightByTime(positionNormalized[positionNormalized.index(position)], simpleLightNormalized)
 """
 
-def mainLightMLTry():
+def mainLightML():
     filePath = Path(sys.argv[1])
     positions = []
     lights = []
@@ -164,6 +169,11 @@ def mainLightMLTry():
     #lightML(lightsOrderedFitted, lightSamplesY)
     
     ConfusionMatrixList = []
+    featureAccuracyAux = []
+    featurePrecisionAux = []
+    featureRecallAux = []
+    featureF1Aux = []
+    
     accuracyListPoly = []
     accuracyListRBF = []
     
@@ -187,36 +197,53 @@ def mainLightMLTry():
             Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
             ConfusionMatrix, accuracy, precision, recall, f1 = lightML(Xtrain, Ytrain, Xtest, Ytest, kern)
             ConfusionMatrixList.append(ConfusionMatrix)
+            featureAccuracyAux.append(accuracy)
+            featurePrecisionAux.append(precision)
+            featureRecallAux.append(recall)
+            featureF1Aux.append(f1)
         if kern == 1:
             ConfusionMatrixListPoly = ConfusionMatrixList
-            accuracyListPoly.append(accuracy)
-            precisionListPoly.append(precision)
-            recallListPoly.append(recall)
-            f1ListPoly.append(f1)
+            ConfusionMatrixListPoly = ConfusionMatrixList
+            accuracyListPoly = featureAccuracyAux
+            precisionListPoly = featurePrecisionAux
+            recallListPoly = featureRecallAux
+            f1ListPoly = featureF1Aux
         else:
             ConfusionMatrixListRBF = ConfusionMatrixList
-            accuracyListRBF.append(accuracy)
-            precisionListRBF.append(precision)
-            recallListRBF.append(recall)
-            f1ListRBF.append(f1)
+            accuracyListRBF = featureAccuracyAux
+            precisionListRBF = featurePrecisionAux
+            recallListRBF = featureRecallAux
+            f1ListRBF = featureF1Aux
+            
         ConfusionMatrixList = []
+        featureAccuracyAux = []
+        featurePrecisionAux = []
+        featureRecallAux = []
+        featureF1Aux = []
     
     print()
     print("POLY")
     ConfusionMatrixPolyMedia = lightsConfusionMedia(ConfusionMatrixListPoly)
-    print()
+    print("accuracyListPoly")
     accuracyPolyMean = featureMean(accuracyListPoly)
+    print("precisionListPoly")
     precisionPolyMean = featureMean(precisionListPoly)
+    print("recallListPoly")
     recallPolyMean = featureMean(recallListPoly)
+    print("f1ListPoly")
     f1PolyMean = featureMean(f1ListPoly)
     
     print()
+    
     print("RBF")
     ConfusionMatrixRBFMedia = lightsConfusionMedia(ConfusionMatrixListRBF)
-    print()
+    print("accuracyListRBF")
     accuracyRBFMean = featureMean(accuracyListRBF)
+    print("precisionListRBF")
     precisionRBFMean = featureMean(precisionListRBF)
+    print("recallListRBF")
     recallRBFMean = featureMean(recallListRBF)
+    print("f1ListRBF")
     f1RBFMean = featureMean(f1ListRBF)
     print()
 
@@ -579,7 +606,49 @@ def main8():
     graphWifisByPositionsBoxplots(wifiExample2, 0)
     print(wifiExample3)
     graphWifisByPositionsBoxplots(wifiExample3, 0)
-    graphWifisByPositionsBoxplots(wifiExample4, 0)    
+    graphWifisByPositionsBoxplots(wifiExample4, 0)
     
-mainLightMLTry()
-#main8()
+def selector(isFirstTime):
+    
+    if isFirstTime:
+        print("State one Valid Number between [0-9].\nEXIT to end program.")
+        print("0 To show light, latitude and longitude by time. Also shows a graph of the position \nand lux by time")
+        print("1 To show graphs of the positions in space and order in the data collecting and lux \nby localization values, with and without its mean values, and boxplots for that data")
+        print("2 To show wifi graphs in each positions ordered and minus their means for the SSID1")
+        print("3 To show wifi graphs in each positions ordered and minus their means for the SSID2")
+        print("4 To show wifi graphs in each positions ordered and minus their means for the SSID3")
+        print("5 To show wifi graphs in each positions ordered and minus their means for the SSID4")
+        print("6 To show wifi graphs in each positions ordered and minus their means for the SSID5")
+        print("7 To show wifi graphs in each positions ordered and minus their means for the SSID6")
+        print("8 To show wifi values in boxplots for 4 different examples, variating Freq and SSID")
+        print("9 To show ML light results")
+    
+    x = input()
+    if x == "EXIT":
+        return
+    
+    if x == "0":
+        main()
+    elif x == "1":
+        main1()
+    elif x == "2":
+        main2()
+    elif x == "3":
+        main3()
+    elif x == "4":
+        main4()
+    elif x == "5":
+        main5()
+    elif x == "6":
+        main6()
+    elif x == "7":
+        main7()
+    elif x == "8":
+        main8()
+    elif x == "9":
+        mainLightML()
+    else: 
+        print("State one Valid Number between [0-9]. EXIT to end program.")
+        selector(False)
+    
+selector(True)

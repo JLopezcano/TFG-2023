@@ -85,9 +85,8 @@ def lightsConfusionMedia(ConfusionsMatrix):
         mediaMatrix.append(mediaRow)   
          
     print()
-    print(sumMatrix)
-    print()
     printConfusionMatrix(mediaMatrix)
+    print()
     
     return mediaMatrix
 

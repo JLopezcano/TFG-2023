@@ -16,11 +16,12 @@ def main():
     filePath = Path(sys.argv[1])
     positions = []
     lights = []
+    wifis = []
     extension = ".txt"
     files = []
     files = os.listdir(filePath)
     
-    lights, positions = readFiles(files, extension, filePath)
+    lights, positions, wifis = readFilesToLists(files, extension, filePath)
 
     graphLightByTime(lights)
     graphLocalization(positions)
@@ -120,7 +121,7 @@ def main1():
         graphPositionAndLightByTime(positionNormalized[positionNormalized.index(position)], simpleLightNormalized)
 """
 
-def mainLightMLTry():
+def mainLightML():
     filePath = Path(sys.argv[1])
     positions = []
     lights = []
@@ -164,6 +165,11 @@ def mainLightMLTry():
     #lightML(lightsOrderedFitted, lightSamplesY)
     
     ConfusionMatrixList = []
+    featureAccuracyAux = []
+    featurePrecisionAux = []
+    featureRecallAux = []
+    featureF1Aux = []
+    
     accuracyListPoly = []
     accuracyListRBF = []
     
@@ -187,36 +193,53 @@ def mainLightMLTry():
             Xtrain, Xtest, Ytrain, Ytest = lightsTestSplit(lightsOrderedFitted, lightSamplesY)
             ConfusionMatrix, accuracy, precision, recall, f1 = lightML(Xtrain, Ytrain, Xtest, Ytest, kern)
             ConfusionMatrixList.append(ConfusionMatrix)
+            featureAccuracyAux.append(accuracy)
+            featurePrecisionAux.append(precision)
+            featureRecallAux.append(recall)
+            featureF1Aux.append(f1)
         if kern == 1:
             ConfusionMatrixListPoly = ConfusionMatrixList
-            accuracyListPoly.append(accuracy)
-            precisionListPoly.append(precision)
-            recallListPoly.append(recall)
-            f1ListPoly.append(f1)
+            ConfusionMatrixListPoly = ConfusionMatrixList
+            accuracyListPoly = featureAccuracyAux
+            precisionListPoly = featurePrecisionAux
+            recallListPoly = featureRecallAux
+            f1ListPoly = featureF1Aux
         else:
             ConfusionMatrixListRBF = ConfusionMatrixList
-            accuracyListRBF.append(accuracy)
-            precisionListRBF.append(precision)
-            recallListRBF.append(recall)
-            f1ListRBF.append(f1)
+            accuracyListRBF = featureAccuracyAux
+            precisionListRBF = featurePrecisionAux
+            recallListRBF = featureRecallAux
+            f1ListRBF = featureF1Aux
+            
         ConfusionMatrixList = []
+        featureAccuracyAux = []
+        featurePrecisionAux = []
+        featureRecallAux = []
+        featureF1Aux = []
     
     print()
     print("POLY")
     ConfusionMatrixPolyMedia = lightsConfusionMedia(ConfusionMatrixListPoly)
-    print()
+    print("accuracyListPoly")
     accuracyPolyMean = featureMean(accuracyListPoly)
+    print("precisionListPoly")
     precisionPolyMean = featureMean(precisionListPoly)
+    print("recallListPoly")
     recallPolyMean = featureMean(recallListPoly)
+    print("f1ListPoly")
     f1PolyMean = featureMean(f1ListPoly)
     
     print()
+    
     print("RBF")
     ConfusionMatrixRBFMedia = lightsConfusionMedia(ConfusionMatrixListRBF)
-    print()
+    print("accuracyListRBF")
     accuracyRBFMean = featureMean(accuracyListRBF)
+    print("precisionListRBF")
     precisionRBFMean = featureMean(precisionListRBF)
+    print("recallListRBF")
     recallRBFMean = featureMean(recallListRBF)
+    print("f1ListRBF")
     f1RBFMean = featureMean(f1ListRBF)
     print()
 
@@ -581,5 +604,6 @@ def main8():
     graphWifisByPositionsBoxplots(wifiExample3, 0)
     graphWifisByPositionsBoxplots(wifiExample4, 0)    
     
-mainLightMLTry()
-#main8()
+#mainLightML()
+main1()
+#main()

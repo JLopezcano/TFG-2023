@@ -6,7 +6,7 @@ from sklearn import preprocessing
 
 from servicios.mapeo.mapeos import getArrayIndex
 #from servicios.mapeo.mapeos import lightFormat
-from clases.classes import colours
+#from clases.classes import colours
 
 def graphLightByTime(lights):
     fig, ax = plt.subplots()

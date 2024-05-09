@@ -13,16 +13,16 @@ def lightGetSamplesY(lights):
             newArray.append(element[0][-1])
     
     return newArray
-"""
-def lightGetSamplesLightY(lights):
+
+def wifiGetSamplesY(wifis):
     newArray = []
     
-    for light in lights:
-        for element in light:
-            newArray.append(element[1])
+    for wifi in wifis:
+        for element in wifi:
+            newArray.append(element[4][-1])
     
     return newArray
-"""
+
 def lightsFittingSamples(lights):
     newArray = []
     array = []
@@ -35,19 +35,26 @@ def lightsFittingSamples(lights):
     
     return newArray
 
-def lightsTestSplit(lights, YSamples):
+def wifisFittingSamples(wifis):
+    newArray = []
+    array = []
+    
+    for wifi in wifis:
+        for element in wifi:
+            array = []
+            array.append(element[3])
+            newArray.append(array)
+    
+    return newArray
+
+def testSplit(rss, YSamples):
     newArraryXTrain = []
     newArraryXTest= []
     newArraryYTrain = []
     newArraryYTest= []
     
-    newArraryXTrain, newArraryXTest, newArraryYTrain, newArraryYTest = train_test_split(lights, YSamples, test_size=0.30, shuffle=True) 
-    """
-    print(newArraryXTrain)
-    print(newArraryXTest)
-    print(newArraryYTrain)
-    print(newArraryYTest)
-    """
+    newArraryXTrain, newArraryXTest, newArraryYTrain, newArraryYTest = train_test_split(rss, YSamples, test_size=0.30, shuffle=True) 
+
     return newArraryXTrain, newArraryXTest, newArraryYTrain, newArraryYTest
 
 def printConfusionMatrix(matrix):
@@ -55,7 +62,7 @@ def printConfusionMatrix(matrix):
     for row in matrix:
         print(row)
 
-def lightsConfusionMedia(ConfusionsMatrix):
+def rssConfusionMedia(ConfusionsMatrix):
     sumMatrix = []
     matrixRow = []
     
@@ -97,6 +104,17 @@ def featureMean(featureList):
         mean = mean + feature
     
     mean = mean / 10
+    print(mean)
+    
+    return mean
+
+def featureMeanWifi(featureList):
+    mean = 0
+    
+    for feature in featureList:
+        mean = mean + feature
+    
+    mean = mean / 2
     print(mean)
     
     return mean

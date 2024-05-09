@@ -3,25 +3,6 @@ from clases.classes import data
 import numpy as np
 from sklearn import preprocessing
 
-"""
-def wifiByPosition(wifis, positions):
-    aux = []
-    auxList = []
-    
-    for position in positions:
-        aux = []
-        indice = positions.index(position)
-        for wifi in wifis[indice]:
-            for posi in position:
-                auxTime1 = posi[0] - 1.5 #2.0
-                auxTime2 = posi[0] + 1.2 #2.0
-                if (wifi[0] <= auxTime2) and (wifi[0] >= auxTime1):
-                    aux.append(wifi)
-        auxList.append(aux)
-            
-    return auxList
-"""
-
 def wifiCappedByPosition(wifis, positions):
     aux = []
     auxList = []

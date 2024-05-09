@@ -61,7 +61,7 @@ def wifiCapBySSID3(wifis):
     
     for wifi in wifis:
         for element in wifi:
-            if (element[1] == "SSID2021_0004"):
+            if (element[1] == "SSID2021_0003"):
                 array.append(element)
         newArray.append(array)
         array = []
@@ -74,7 +74,7 @@ def wifiCapByFrequency3(wifis):
     
     for wifi in wifis:
         for element in wifi:
-            if (element[2] == float(2472)):
+            if (element[2] == float(2422)):
                 array.append(element)
         newArray.append(array)
         array = []
@@ -87,7 +87,7 @@ def wifiCapBySSID4(wifis):
     
     for wifi in wifis:
         for element in wifi:
-            if (element[1] == "SSID2021_0006"):
+            if (element[1] == "SSID2021_0004"):
                 array.append(element)
         newArray.append(array)
         array = []
@@ -100,7 +100,7 @@ def wifiCapByFrequency4(wifis):
     
     for wifi in wifis:
         for element in wifi:
-            if (element[2] == float(2412)):
+            if (element[2] == float(2472)):
                 array.append(element)
         newArray.append(array)
         array = []
@@ -113,7 +113,7 @@ def wifiCapBySSID5(wifis):
     
     for wifi in wifis:
         for element in wifi:
-            if (element[1] == "SSID2021_0001"):
+            if (element[1] == "SSID2021_0005"):
                 array.append(element)
         newArray.append(array)
         array = []
@@ -152,7 +152,20 @@ def wifiCapByFrequency6(wifis):
     
     for wifi in wifis:
         for element in wifi:
-            if (element[2] == float(5180)):
+            if (element[2] == float(2412)):
+                array.append(element)
+        newArray.append(array)
+        array = []
+        
+    return newArray
+
+def wifiCapByFrequency7(wifis):
+    newArray = []
+    array = []
+    
+    for wifi in wifis:
+        for element in wifi:
+            if (element[2] == float(2462)):
                 array.append(element)
         newArray.append(array)
         array = []

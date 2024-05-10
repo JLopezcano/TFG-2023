@@ -289,7 +289,7 @@ def main6():
     wifisCappedSSID5 = wifiCapBySSID5(wifisInPosition)
             
     wifisCappedFrequency = []
-    wifisCappedFrequency = wifiCapByFrequency5(wifisCappedSSID5)
+    wifisCappedFrequency = wifiCapByFrequency(wifisCappedSSID5)
             
     wifisOrderedPositions = wifisOrdered(wifisCappedFrequency)
     wifisOrderedsBoxplot = wifiOrderingPositionsForBoxplot(wifisCappedFrequency)

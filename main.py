@@ -2,6 +2,7 @@ import sys
 import os
 from pathlib import Path
 
+import numpy as np
 import signal
 import sys
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
@@ -493,29 +494,55 @@ def mainLightML():
         featureF1Aux = []
     
     print()
+    
     print("POLY")
     ConfusionMatrixPolyMedia = rssConfusionMedia(ConfusionMatrixListPoly)
+    
     print("accuracyListPoly")
     accuracyPolyMean = featureMean(accuracyListPoly)
+    print("Desviación accuracy")
+    print(np.std(accuracyListPoly))
+    
     print("precisionListPoly")
     precisionPolyMean = featureMean(precisionListPoly)
+    print("Desviación precision")
+    print(np.std(precisionListPoly))
+    
     print("recallListPoly")
     recallPolyMean = featureMean(recallListPoly)
+    print("Desviación recall")
+    print(np.std(recallListPoly))
+    
     print("f1ListPoly")
     f1PolyMean = featureMean(f1ListPoly)
-    
+    print("Desviación f1")
+    print(np.std(f1ListPoly))
+        
     print()
     
     print("RBF")
     ConfusionMatrixRBFMedia = rssConfusionMedia(ConfusionMatrixListRBF)
+    
     print("accuracyListRBF")
     accuracyRBFMean = featureMean(accuracyListRBF)
+    print("Desviación accuracy")
+    print(np.std(accuracyListRBF))
+    
     print("precisionListRBF")
     precisionRBFMean = featureMean(precisionListRBF)
+    print("Desviación precision")
+    print(np.std(precisionListRBF))
+    
     print("recallListRBF")
     recallRBFMean = featureMean(recallListRBF)
+    print("Desviación recall")
+    print(np.std(recallListRBF))
+
     print("f1ListRBF")
     f1RBFMean = featureMean(f1ListRBF)
+    print("Desviación f1")
+    print(np.std(f1ListRBF))
+
     print()
     
 def mainWifiML():
@@ -617,29 +644,55 @@ def mainWifiML():
         featureF1Aux = []
     
     print()
+    
     print("POLY")
     ConfusionMatrixPolyMedia = rssConfusionMedia(ConfusionMatrixListPoly)
+    
     print("accuracyListPoly")
     accuracyPolyMean = featureMeanWifi(accuracyListPoly)
+    print("Desviación accuracy")
+    print(np.std(accuracyListPoly))
+    
     print("precisionListPoly")
     precisionPolyMean = featureMeanWifi(precisionListPoly)
+    print("Desviación precision")
+    print(np.std(precisionListPoly))
+    
     print("recallListPoly")
     recallPolyMean = featureMeanWifi(recallListPoly)
+    print("Desviación recall")
+    print(np.std(recallListPoly))
+    
     print("f1ListPoly")
     f1PolyMean = featureMeanWifi(f1ListPoly)
-    
+    print("Desviación f1")
+    print(np.std(f1ListPoly))
+        
     print()
     
     print("RBF")
     ConfusionMatrixRBFMedia = rssConfusionMedia(ConfusionMatrixListRBF)
+    
     print("accuracyListRBF")
     accuracyRBFMean = featureMeanWifi(accuracyListRBF)
+    print("Desviación accuracy")
+    print(np.std(accuracyListRBF))
+    
     print("precisionListRBF")
     precisionRBFMean = featureMeanWifi(precisionListRBF)
+    print("Desviación precision")
+    print(np.std(precisionListRBF))
+    
     print("recallListRBF")
     recallRBFMean = featureMeanWifi(recallListRBF)
+    print("Desviación recall")
+    print(np.std(recallListRBF))
+
     print("f1ListRBF")
     f1RBFMean = featureMeanWifi(f1ListRBF)
+    print("Desviación f1")
+    print(np.std(f1ListRBF))
+
     print()
     
 def selector(isFirstTime):

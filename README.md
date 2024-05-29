@@ -3,7 +3,7 @@
 Aquí se expone la forma de ejecutar el código para observar los datos y resultados. El
 archivo ejecutable es el “main.py”, al ejecutarlo aparecerán los datos y gráficas. Para ello, se
 ha dispuesto de un input en la ejecución del programa, el cuál pedirá que se inserte un valor
-numérico del 0 al 8. 
+numérico del 0 al 9. 
 
 Al insertar este valor, podrá observar las diferentes gráficas explicadas
 por pantalla. Para poder realizar la ejecución, es necesario tener instaladas las librerías
